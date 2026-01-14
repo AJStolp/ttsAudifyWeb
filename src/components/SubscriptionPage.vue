@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
+  <div class="min-h-screen bg-gray-50 dark:bg-charcoal-800 py-8">
     <div class="max-w-7xl mx-auto px-4">
       <!-- Header -->
       <div class="text-center mb-12">
@@ -27,7 +27,7 @@
           <div class="text-lg text-gray-600 dark:text-gray-400">
             {{ (selectedCredits * sliderConfig.characters_per_credit).toLocaleString() }} characters
             <span class="mx-2">•</span>
-            <span class="font-semibold" :class="currentTier === 'Pro' ? 'text-amber-500' : 'text-purple-500'">
+            <span class="font-semibold" :class="currentTier === 'Pro' ? 'text-amber-500' : 'text-gray-900 dark:text-white'">
               {{ currentTier }} Tier
             </span>
           </div>
@@ -41,7 +41,7 @@
             :min="sliderConfig.min"
             :max="sliderConfig.max"
             :step="100"
-            class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700 accent-purple-600"
+            class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700 accent-gray-800 dark:accent-gray-300"
           />
           <div class="flex justify-between text-xs text-gray-500 dark:text-gray-400 mt-2">
             <span>{{ sliderConfig.min.toLocaleString() }}</span>
@@ -58,8 +58,8 @@
             :class="[
               'p-3 rounded-lg border-2 transition',
               selectedCredits === pkg.credits
-                ? 'border-purple-500 bg-purple-50 dark:bg-purple-900/20'
-                : 'border-gray-300 dark:border-gray-600 hover:border-purple-400'
+                ? 'border-gray-800 dark:border-gray-300 bg-gray-100 dark:bg-charcoal-600'
+                : 'border-gray-300 dark:border-gray-600 hover:border-gray-600 dark:hover:border-gray-400'
             ]"
           >
             <div class="text-sm font-semibold text-gray-900 dark:text-white">
@@ -74,7 +74,7 @@
 
       <!-- Loading State -->
       <div v-if="loading && !sliderConfig" class="text-center py-12">
-        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-500 mx-auto"></div>
+        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-800 dark:border-gray-300 mx-auto"></div>
         <p class="text-gray-600 dark:text-gray-400 mt-4">Loading pricing options...</p>
       </div>
 
@@ -84,7 +84,7 @@
           <p class="text-red-600 dark:text-red-400">{{ error }}</p>
           <button
             @click="fetchCreditPackages"
-            class="mt-4 px-4 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600"
+            class="mt-4 px-4 py-2 bg-gray-800 dark:bg-gray-200 text-white dark:text-black rounded-lg hover:bg-gray-900 dark:hover:bg-white"
           >
             Try Again
           </button>
@@ -95,7 +95,7 @@
       <div v-if="sliderConfig" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto mb-12">
 
         <!-- FREE TIER -->
-        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 border-2 border-gray-200 dark:border-gray-700 flex flex-col h-full">
+        <div class="bg-white dark:bg-charcoal-700 rounded-xl shadow-lg p-6 border-2 border-gray-200 dark:border-charcoal-600 flex flex-col h-full">
           <div class="text-center mb-6">
             <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Free</h3>
             <div class="text-4xl font-bold text-gray-900 dark:text-white mb-2">$0</div>
@@ -127,14 +127,14 @@
 
         <!-- LIGHT TIER (NEW) -->
         <div
-          class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 border-2 relative flex flex-col h-full"
+          class="bg-white dark:bg-charcoal-900 rounded-xl shadow-lg p-6 border-2 relative flex flex-col h-full"
           :class="[
-            currentTier === 'Light' ? 'border-blue-500 transform hover:scale-105 transition' : 'border-gray-300 dark:border-gray-600',
+            currentTier === 'Light' ? 'border-gray-800 dark:border-gray-300 transform hover:scale-105 transition' : 'border-gray-300 dark:border-gray-600',
             isLightDisabled ? 'opacity-60' : ''
           ]"
         >
           <div v-if="currentTier === 'Light'" class="absolute -top-3 left-1/2 transform -translate-x-1/2">
-            <span class="bg-gradient-to-r from-blue-400 to-cyan-500 text-white px-4 py-1 rounded-full text-sm font-medium">
+            <span class="bg-gradient-to-r from-gray-700 to-gray-900 dark:from-gray-300 dark:to-gray-100 text-white dark:text-black px-4 py-1 rounded-full text-sm font-medium">
               Selected
             </span>
           </div>
@@ -176,7 +176,7 @@
             v-if="!isLightDisabled"
             @click="handlePurchase"
             :disabled="loading"
-            class="w-full p-3 bg-gradient-to-r from-blue-400 to-cyan-500 text-white rounded-lg hover:from-blue-500 hover:to-cyan-600 transition shadow-lg mt-auto"
+            class="w-full p-3 bg-gradient-to-r from-gray-700 to-gray-900 dark:from-gray-300 dark:to-gray-100 text-white dark:text-black rounded-lg hover:from-gray-800 hover:to-black dark:hover:from-gray-200 dark:hover:to-white transition shadow-lg mt-auto"
             :class="loading ? 'opacity-50 cursor-not-allowed' : ''"
           >
             <span v-if="loading">Processing...</span>
@@ -190,14 +190,14 @@
 
         <!-- PREMIUM TIER -->
         <div
-          class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 border-2 relative flex flex-col h-full"
+          class="bg-white dark:bg-charcoal-900 rounded-xl shadow-lg p-6 border-2 relative flex flex-col h-full"
           :class="[
-            currentTier === 'Premium' ? 'border-purple-500 transform hover:scale-105 transition' : 'border-gray-300 dark:border-gray-600',
+            currentTier === 'Premium' ? 'border-gray-800 dark:border-gray-300 transform hover:scale-105 transition' : 'border-gray-300 dark:border-gray-600',
             isPremiumDisabled ? 'opacity-60' : ''
           ]"
         >
           <div v-if="currentTier === 'Premium'" class="absolute -top-3 left-1/2 transform -translate-x-1/2">
-            <span class="bg-gradient-to-r from-purple-500 to-blue-500 text-white px-4 py-1 rounded-full text-sm font-medium">
+            <span class="bg-gradient-to-r from-gray-700 to-gray-900 dark:from-gray-300 dark:to-gray-100 text-white dark:text-black px-4 py-1 rounded-full text-sm font-medium">
               Selected
             </span>
           </div>
@@ -239,7 +239,7 @@
             v-if="!isPremiumDisabled"
             @click="handlePurchase"
             :disabled="loading"
-            class="w-full p-3 bg-gradient-to-r from-purple-500 to-blue-500 text-white rounded-lg hover:from-purple-600 hover:to-blue-600 transition shadow-lg mt-auto"
+            class="w-full p-3 bg-gradient-to-r from-gray-700 to-gray-900 dark:from-gray-300 dark:to-gray-100 text-white dark:text-black rounded-lg hover:from-gray-800 hover:to-black dark:hover:from-gray-200 dark:hover:to-white transition shadow-lg mt-auto"
             :class="loading ? 'opacity-50 cursor-not-allowed' : ''"
           >
             <span v-if="loading">Processing...</span>
@@ -253,7 +253,7 @@
 
         <!-- PRO TIER -->
         <div
-          class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 border-2 relative flex flex-col h-full"
+          class="bg-white dark:bg-charcoal-900 rounded-xl shadow-lg p-6 border-2 relative flex flex-col h-full"
           :class="[
             currentTier === 'Pro' ? 'border-amber-500 transform hover:scale-105 transition' : 'border-gray-300 dark:border-gray-600',
             isProDisabled ? 'opacity-60' : ''
@@ -317,7 +317,7 @@
 
       <!-- Back Link -->
       <div class="text-center mt-12">
-        <a href="/pages/index.html" class="text-purple-500 hover:underline">
+        <a href="/pages/index.html" class="text-gray-800 dark:text-gray-300 hover:text-black dark:hover:text-white hover:underline">
           ← Back to Home
         </a>
       </div>

@@ -18,9 +18,6 @@ export default defineConfig({
         'email-verification': resolve(__dirname, "src/vue-entries/email-verification.ts"),
         'success': resolve(__dirname, "src/vue-entries/success.ts"),
         'demo': resolve(__dirname, "src/vue-entries/demo.ts"),
-
-        // CSS
-        'globals': resolve(__dirname, "src/styles/globals.css"),
       },
       output: {
         entryFileNames: '[name].js',

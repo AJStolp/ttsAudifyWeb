@@ -6,6 +6,7 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import SuccessPage from '../components/SuccessPage.vue'
+import '../styles/globals.css'
 
 // Create Pinia store
 const pinia = createPinia()
