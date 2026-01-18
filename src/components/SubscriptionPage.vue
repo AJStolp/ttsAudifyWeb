@@ -360,6 +360,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, watch } from 'vue'
 import { trackEvent, ANALYTICS_EVENTS } from '@shared/utils/analytics'
+import { useAuthStore } from '@shared/stores/authStore'
 
 // API calls use relative URLs - Vite proxy forwards /api to backend
 
@@ -382,6 +383,9 @@ interface SliderConfig {
   pro_rate: number
   characters_per_credit: number
 }
+
+// Auth
+const authStore = useAuthStore()
 
 // State
 const selectedCredits = ref(500) // Updated default to new minimum
@@ -568,11 +572,20 @@ const handlePurchase = async () => {
   })
 
   try {
+    // Build headers with auth token if available
+    const headers: Record<string, string> = {
+      'Content-Type': 'application/json',
+    }
+
+    // Try authStore first, fallback to localStorage
+    const token = authStore.authToken || localStorage.getItem('auth_token')
+    if (token) {
+      headers['Authorization'] = `Bearer ${token}`
+    }
+
     const response = await fetch('/api/create-credit-checkout', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers,
       body: JSON.stringify({
         credits: selectedCredits.value
       })
@@ -619,7 +632,10 @@ watch(currentTier, (newTier, oldTier) => {
 })
 
 // Initialize on mount
-onMounted(() => {
+onMounted(async () => {
+  // Initialize auth (loads tokens from storage)
+  await authStore.initializeAuth()
+
   // Track subscription page view
   trackEvent(ANALYTICS_EVENTS.SUBSCRIPTION_VIEW)
 
