@@ -84,7 +84,7 @@
             ]"
           >
             <div class="text-sm font-semibold text-gray-900">
-              {{ (pkg.credits / 1000).toFixed(0) }}K
+              {{ pkg.credits >= 1000 ? (pkg.credits / 1000) + 'K' : pkg.credits }}
             </div>
             <div class="text-xs text-gray-600">
               ${{ pkg.price.toFixed(2) }}
@@ -403,7 +403,7 @@ const calculatedPrice = computed(() => {
   const credits = selectedCredits.value
   const config = sliderConfig.value
 
-  // All tiers use the same rate: $0.007/credit (no volume discount)
+  // All tiers use the same rate: $0.012/credit (no volume discount)
   if (credits >= 500) {
     return credits * config.premium_rate
   }
