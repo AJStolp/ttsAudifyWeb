@@ -6,6 +6,7 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineConfig({
   plugins: [vue(), tailwindcss()],
   root: "src",
+  envDir: resolve(__dirname, "."),  // Load .env files from project root
 
   build: {
     outDir: "../dist",

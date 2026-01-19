@@ -6,14 +6,21 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import DemoPage from '../components/DemoPage.vue'
+import { initializeExtensionAuthSync } from '../shared/composables/useExtensionAuthSync'
 import '../styles/globals.css'
 
 // Create Pinia store
 const pinia = createPinia()
 
+// Initialize extension auth sync listener (receives auth from browser extension)
+let cleanupAuthSync: (() => void) | null = null
+
 // Initialize the demo page
 function initializeDemoPage() {
   const container = document.getElementById('app') || document.body
+
+  // Initialize extension auth sync before mounting Vue app
+  cleanupAuthSync = initializeExtensionAuthSync()
 
   // Create Vue app
   const app = createApp(DemoPage)

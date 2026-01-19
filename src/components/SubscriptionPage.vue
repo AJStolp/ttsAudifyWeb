@@ -113,10 +113,10 @@
       </div>
 
       <!-- 4-Tier Grid -->
-      <div v-if="sliderConfig" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto mb-12">
+      <div v-if="sliderConfig" class="tier-grid max-w-7xl mx-auto mb-12 px-4">
 
         <!-- FREE TIER -->
-        <div class="bg-white rounded-2xl shadow-sm p-6 border border-gray-100 hover:shadow-lg hover:border-gray-200 transition duration-300 flex flex-col h-full">
+        <div class="bg-white rounded-2xl shadow-sm p-6 border border-gray-100 hover:shadow-lg hover:border-gray-200 transition duration-300 flex flex-col min-h-[400px]">
           <div class="text-center mb-6">
             <h3 class="text-2xl font-bold text-gray-900 mb-2">Free</h3>
             <div class="text-4xl font-bold text-gray-900 mb-2">$0</div>
@@ -148,7 +148,7 @@
 
         <!-- LIGHT TIER -->
         <div
-          class="bg-white rounded-2xl shadow-sm p-6 border-2 relative flex flex-col h-full transition duration-300"
+          class="bg-white rounded-2xl shadow-sm p-6 border-2 relative flex flex-col min-h-[400px] transition duration-300"
           :class="[
             currentTier === 'Light' ? 'border-[#749076] shadow-lg' : 'border-gray-100 hover:shadow-lg hover:border-gray-200',
             isLightDisabled ? 'opacity-50' : ''
@@ -211,7 +211,7 @@
 
         <!-- PREMIUM TIER -->
         <div
-          class="bg-white rounded-2xl shadow-sm p-6 border-2 relative flex flex-col h-full transition duration-300"
+          class="bg-white rounded-2xl shadow-sm p-6 border-2 relative flex flex-col min-h-[400px] transition duration-300"
           :class="[
             currentTier === 'Premium' ? 'border-[#749076] shadow-lg' : 'border-gray-100 hover:shadow-lg hover:border-gray-200',
             isPremiumDisabled ? 'opacity-50' : ''
@@ -642,3 +642,24 @@ onMounted(async () => {
   fetchCreditPackages()
 })
 </script>
+
+<style scoped>
+.tier-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+@media (min-width: 640px) {
+  .tier-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .tier-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+  }
+}
+</style>
