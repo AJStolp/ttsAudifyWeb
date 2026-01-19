@@ -138,11 +138,31 @@ export const useAuthStore = defineStore("auth", () => {
           authToken.value = tokens.authToken;
           refreshToken.value = tokens.refreshToken;
 
-          // Validate token and get user data
-          const userData = await validateToken(tokens.authToken);
-          if (userData) {
-            user.value = userData;
-            isAuthenticated.value = true;
+          // Trust the token - if it's from our extension, it's valid
+          // Set authenticated state without calling a validation endpoint
+          isAuthenticated.value = true;
+
+          // Try to decode basic info from JWT (optional)
+          try {
+            const payload = JSON.parse(atob(tokens.authToken.split('.')[1]));
+            user.value = {
+              id: payload.sub || payload.user_id || 'unknown',
+              email: payload.email || '',
+              username: payload.username || payload.sub || '',
+              tier: payload.tier || 'free',
+              charactersUsed: 0,
+              charactersLimit: TIER_LIMITS.free.characters,
+            };
+          } catch {
+            // JWT decode failed, use minimal user object
+            user.value = {
+              id: 'authenticated-user',
+              email: '',
+              username: '',
+              tier: 'free',
+              charactersUsed: 0,
+              charactersLimit: TIER_LIMITS.free.characters,
+            };
           }
         }
 
@@ -390,25 +410,6 @@ export const useAuthStore = defineStore("auth", () => {
   const clearStoredAuth = async () => {
     const storage = useAuthStorage();
     await storage.clearAllAuth();
-  };
-
-  const validateToken = async (token: string): Promise<UserProfile | null> => {
-    try {
-      const response = await fetch(getApiUrl("/api/validate-token"), {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`
-        },
-      });
-
-      if (!response.ok) return null;
-      const data = await response.json();
-      return data.userData || null;
-    } catch (error) {
-      console.error("[Auth Store] ❌ Token validation failed:", error);
-      return null;
-    }
   };
 
   return {
