@@ -36,7 +36,7 @@
 
       <div class="prose prose-gray max-w-none">
         <p class="text-gray-700 mb-8">
-          TTS Audify ("we," "our," or "us") operates the TTS Audify browser extension and website (ttsaudify.com). This Privacy Policy explains how we collect, use, and protect your information.
+          ttsAudify ("we," "our," or "us") operates the ttsAudify browser extension and website (ttsaudify.com). This Privacy Policy explains how we collect, use, and protect your information.
         </p>
 
         <!-- Information We Collect -->
@@ -222,7 +222,7 @@
         <section class="mb-10">
           <h2 class="text-2xl font-bold text-gray-900 mb-4">Children's Privacy</h2>
           <p class="text-gray-700">
-            TTS Audify is not intended for children under 13. We do not knowingly collect personal information from children under 13.
+            ttsAudify is not intended for children under 13. We do not knowingly collect personal information from children under 13.
           </p>
         </section>
 
