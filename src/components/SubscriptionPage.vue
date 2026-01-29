@@ -680,6 +680,23 @@ watch(currentTier, (newTier, oldTier) => {
 
 // Initialize on mount
 onMounted(async () => {
+  // Check for token in URL (passed from Chrome extension)
+  const urlParams = new URLSearchParams(window.location.search)
+  const tokenFromUrl = urlParams.get('token')
+
+  if (tokenFromUrl) {
+    // Store the token
+    localStorage.setItem('auth_token', tokenFromUrl)
+    authStore.authToken = tokenFromUrl
+
+    // Remove token from URL for security (keeps it out of browser history)
+    urlParams.delete('token')
+    const newUrl = urlParams.toString()
+      ? `${window.location.pathname}?${urlParams.toString()}`
+      : window.location.pathname
+    window.history.replaceState({}, '', newUrl)
+  }
+
   // Initialize auth (loads tokens from storage)
   await authStore.initializeAuth()
 
