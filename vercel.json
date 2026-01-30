@@ -1,6 +1,14 @@
 {
   "buildCommand": "bun run build",
   "outputDirectory": "dist",
+  "redirects": [
+    {
+      "source": "/:path(.*)",
+      "has": [{ "type": "host", "value": "ttsaudify.com" }],
+      "destination": "https://www.ttsaudify.com/:path",
+      "permanent": true
+    }
+  ],
   "routes": [
     { "src": "^/$", "dest": "/pages/index.html" },
     { "src": "^/subscription$", "dest": "/pages/subscription.html" },
