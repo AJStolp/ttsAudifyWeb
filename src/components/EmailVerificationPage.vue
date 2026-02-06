@@ -54,7 +54,7 @@
     </div>
 
     <!-- Footer -->
-    <footer class="bg-gray-50 py-12 mt-auto">
+    <footer class="py-12 mt-auto">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center">
           <p class="text-gray-600">
